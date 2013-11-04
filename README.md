@@ -5,7 +5,7 @@
 
 Members:
 陳致廷 (cct823)
-阮鼎翔 (test)
+阮鼎翔 (Adewawa)
 陳立培
 陳信愷
 
