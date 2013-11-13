@@ -18,16 +18,9 @@ public class SerialTest implements SerialPortEventListener {
 			"/dev/ttyUSB0", // Linux
 			"COM3", // Windows
 	};
-	/**
-	* A BufferedReader which will be fed by a InputStreamReader 
-	* converting the bytes into characters 
-	* making the displayed results codepage independent
-	*/
 	private BufferedReader input;
-        BufferedReader buf;
 	/** The output stream to the port */
 	private OutputStream output ;
-        OutputStream gotoar;
 	/** Milliseconds to block while waiting for port open */
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
@@ -74,17 +67,14 @@ public class SerialTest implements SerialPortEventListener {
 			System.err.println(e.toString());
 		}
 	}
-	public void SendtoAr(){
+	public void SendtoSerial(String msg){
             try {
-                   Scanner reader = new Scanner(System.in);
-	System.out.print("please input A or D :");
-                   char c = reader.next().charAt(0);
-	gotoar=serialPort.getOutputStream();
-                   gotoar.write(c);
-                   System.out.print(c);
-		
-	}catch (Exception e){
-                    System.err.println(e.toString());
+                   System.out.println(msg);   
+                   byte b[] = msg.getBytes();
+                   System.out.println(b);
+                   output.write(b);
+	}catch (Exception ex){
+                    System.err.println(ex.toString());
                 }
         }
 	/**
@@ -106,29 +96,13 @@ public class SerialTest implements SerialPortEventListener {
 			try {
 				String inputLine=input.readLine();
 				System.out.println(inputLine);
-			} catch (Exception e) {
-				System.err.println(e.toString());
+			} catch (Exception ex) {
+				System.err.println(ex.toString());
 			}
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
 
-	public static void main(String[] args) throws Exception {
-		SerialTest main = new SerialTest();
-		main.initialize();
-                                      
-		Thread t=new Thread() {
-			public void run() {
-				//the following line will keep this app alive for 1000 seconds,
-				//waiting for events to occur and responding to them (printing incoming messages to console).
-		try {
-                                            Thread.sleep(1000000);} 
-                                          catch (Exception e) {System.err.println(e.toString());} 
-                                        }
-	};
-                                       t.start();
-                                       main.SendtoAr();
-		System.out.println("Started");
-        }
+	
 }
                     
